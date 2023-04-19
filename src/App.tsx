@@ -6,6 +6,7 @@ import Moeda1ContextProvider from './hooks/useMoeda1'
 import Moeda2ContextProvider from './hooks/useMoeda2'
 import Header from './layout/Header'
 import Footer from './layout/Footer'
+import Support from './layout/Support'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
                 <Routes>
                   <Route path='/' element={<Home/>}/>
                  </Routes>
+                 <Support/>
                  <Footer/>
                 </IdiomaContextProvider>
               </Moeda2ContextProvider>
