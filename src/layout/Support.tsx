@@ -1,7 +1,7 @@
 import { useState } from "react"
 import emailJs from '@emailjs/browser'
 import  {useIdioma} from '../hooks/useIdioma'
-import { title } from "process"
+import index from "../translate/index"
 
 export default function Support(){
     const publicToken = ( import.meta.env.VITE_PUBLIC_TOKEN_EMAILJS|| '').toString()
@@ -13,19 +13,8 @@ export default function Support(){
     const [message, setMessage] = useState('')
     const [solicitacao, setSolicitacao] = useState('Melhoria')
     const [loading, setLoading] = useState(false)
-    const {idioma} = useIdioma()
 
-    let text = {
-        name: idioma == 'PT' ? 'Digite seu nome' : idioma == 'EN' ? 'Type your name' : 'Escriba su nombre',
-        email: idioma == 'PT' ? 'Digite seu email para possivel contato' : idioma == 'EN' ? 'Enter your email for possible contact' : 'Introduce tu email para un posible contacto',
-        message: idioma == 'PT' ? 'Digite sua mensagem' : idioma == 'EN' ? 'Enter your message' : 'Escribe tu mensaje',
-        solicitacao: {
-            melhoria: idioma == 'PT' ? 'Melhoria': idioma == 'EN' ? 'Improvement' : 'Mejora',
-            problema: idioma == 'PT' ? 'Problemas no site': idioma == 'EN' ? 'Website Problems' : 'Problemas del Sitio web',
-            contato: idioma == 'PT' ? 'Contato' : idioma == 'EN' ? 'Contact' : 'Contacto',
-            title: idioma == 'PT' ? 'Contate-nos' : idioma == 'EN' ? 'Contact Us' : 'Contáctenos'
-        }
-    }
+    let language = index().language
 
     function OpenChat(){
         if(openChat == false){
@@ -65,7 +54,7 @@ export default function Support(){
                 {openChat == true ? (
                     <form onSubmit={sendEmail} className='py-10 z-50 flex flex-col items-start justify-center fixed bottom-8 right-10 border-2 border-gray-900   dark:border-cyan-500 p-10 rounded-md bg-white dark:bg-gray-900' >
                         <i onClick={OpenChat} className="fa-solid fa-xmark fa-xl absolute top-8 right-10 text-black dark:text-white"></i>
-                        <h2 className="text-lg mb-2 dark:text-white">{text.solicitacao.title}</h2>
+                        <h2 className="text-lg mb-2 dark:text-white">{language.Support.title}</h2>
                         <div className="flex flex-col items-start justify-center">
                             <select name="solicitacao" onChange={(e)=>setSolicitacao(e.target.value)} className="
                                 bg-white
@@ -86,11 +75,11 @@ export default function Support(){
                                 md:w-[calc(90vw)]
                                 placeholder:text-gray-600
                                 dark:placeholder:text-gray-500">
-                                <option value="Melhoria" selected>{text.solicitacao.melhoria}</option>
-                                <option value="Problema">{text.solicitacao.problema}</option>
-                                <option value="Contato">{text.solicitacao.contato}</option>
+                                <option value="Melhoria" selected>{language.Support.request.melhoria}</option>
+                                <option value="Problema">{language.Support.request.problema}</option>
+                                <option value="Contato">{language.Support.request.contato}</option>
                             </select>
-                            <input type="text" placeholder={text.name} onChange={(e)=>setName(e.target.value)} value={name} minLength={3}
+                            <input type="text" placeholder={language.Support.name} onChange={(e)=>setName(e.target.value)} value={name} minLength={3}
                             className="
                                 bg-white
                                 dark:bg-gray-900
@@ -111,7 +100,7 @@ export default function Support(){
                                 placeholder:text-gray-600
                                 dark:placeholder:text-gray-500"
                             required/>
-                            <input type="email" placeholder={text.email} onChange={(e)=>setEmail(e.target.value)} value={email} 
+                            <input type="email" placeholder={language.Support.email} onChange={(e)=>setEmail(e.target.value)} value={email} 
                             className="
                                 bg-white
                                 dark:bg-gray-900
@@ -132,7 +121,7 @@ export default function Support(){
                                 placeholder:text-gray-600
                                 dark:placeholder:text-gray-500"
                             required/>
-                            <textarea placeholder={text.message} onChange={(e)=>setMessage(e.target.value)} value={message} rows={15} cols={30}
+                            <textarea placeholder={language.Support.message} onChange={(e)=>setMessage(e.target.value)} value={message} rows={15} cols={30}
                             className="
                                 bg-white
                                 dark:bg-gray-900
@@ -161,7 +150,7 @@ export default function Support(){
                                     <i className="fa fa-spinner fa-spin"></i>
                                 </button>
                             ) : (
-                                <input type="submit" value="Enviar mensagem" className='w-44 h-10 rounded-3xl border-2 text-white text-base pl-4 pr-4 bg-gray-900 border-cyan-500 hover:bg-cyan-500 transition-colors duration-[0.2s]'/>
+                                <input type="submit" value={language.Support.sendMessage} className='w-44 h-10 rounded-3xl border-2 text-white text-base pl-4 pr-4 bg-gray-900 border-cyan-500 hover:bg-cyan-500 transition-colors duration-[0.2s]'/>
                             )}
                                                         
                         </div>

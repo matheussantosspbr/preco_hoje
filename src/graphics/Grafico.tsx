@@ -2,33 +2,19 @@ import ApexChart from 'react-apexcharts';
 import { useTheme } from '../hooks/useTheme';
 import { useMoeda1 } from "../hooks/useMoeda1";
 import { useMoeda2 } from "../hooks/useMoeda2";
-import { useIdioma } from '../hooks/useIdioma';
 
 interface props{
   titulo: string;
+  serieText: string;
   dados: Array<number>;
   datas: Array<string>;
 }
 
-export default function Grafico({titulo, dados, datas}: props) {
+export default function Grafico({titulo,serieText, dados, datas}: props) {
 
   const {theme} = useTheme() || 'light';
   const { moeda1 } = useMoeda1()
   const { moeda2 } = useMoeda2()
-  const { idioma } = useIdioma()
-
-  let title = ''
-
-  if (titulo === "Preço nas ultimas 24 horas") {
-    if (idioma == 'EN'){
-      title = 'Price in the last 24 hours'
-    }else if (idioma == 'ES'){
-      title = 'Precio en las últimas 24 horas'
-    }else{
-      title = titulo
-    }
-  }
-  
 
   const data = {
     options: {
@@ -53,7 +39,7 @@ export default function Grafico({titulo, dados, datas}: props) {
     },
       
       title: {
-        text: title,
+        text: titulo,
         margin: 10,
         offsetX: 7,
         offsetY: 0,
@@ -85,7 +71,7 @@ export default function Grafico({titulo, dados, datas}: props) {
     },
     series:[
       {
-        name: 'Preço',
+        name: serieText,
         data: dados
       }
     ]
